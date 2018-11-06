@@ -78,7 +78,7 @@ foreach pigm_resid $pigm_list {
 			}
 		}
 		puts "the $num drawing-----$resn11$pigm_resid11 and $resn22$pigm_resid22\n"
-		puts $file "$num_dis resname$resn11/resid$pigm_resid11/atom$atom_index resname$resn22/resid$pigm_resid22/atom$atom_index2"
+		puts $file "$num_dis resname$resn11/resid$pigm_resid11/atom$atom_index11 resname$resn22/resid$pigm_resid22/atom$atom_index22"
 		graphics top color 1 
 		graphics top line [lindex $cord11 0] [lindex $cord22 0] width 3 style dashed
 	}
