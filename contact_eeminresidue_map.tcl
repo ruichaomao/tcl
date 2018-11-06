@@ -41,8 +41,7 @@ foreach pigm_resid $pigm_list {
 		set cord1_vec [lindex $cord1 0]
 		#puts cord1$cord1_vec
 		#cycle2
-		set pigm2 [atomselect top "resname $pigm_name and same residue as exwithin 
-10 of residue $pigm_resid"]
+		set pigm2 [atomselect top "resname $pigm_name and same residue as exwithin 10 of residue $pigm_resid"]
 		set pigm_list2 [lsort -unique -integer [$pigm2 get residue]]
 		$pigm2 delete
 		#puts $pigm_list2
@@ -79,10 +78,8 @@ foreach pigm_resid $pigm_list {
 			}
 		}
 		puts "the $num drawing-----$resn11$pigm_resid11 and $resn22$pigm_resid22\n"
-		puts $file "$num_dis resname$resn11/resid$pigm_resid11/atom$atom_index resn
-ame$resn22/resid$pigm_resid22/atom$atom_index2"
+		puts $file "$num_dis resname$resn11/resid$pigm_resid11/atom$atom_index11 resname$resn22/resid$pigm_resid22/atom$atom_index22"
 		graphics top color 1 
-		graphics top line [lindex $cord11 0] [lindex $cord22 0] width 3 style dashe
-d
+		graphics top line [lindex $cord11 0] [lindex $cord22 0] width 3 style dashed
 	}
 close $file
