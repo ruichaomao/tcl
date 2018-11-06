@@ -32,16 +32,14 @@ foreach pigm_resid $pigm_list {
 		set cord1_vec [lindex $cord1 0]
 		#puts cord1$cord1_vec
 		#cycle2
-		set pigm2 [atomselect top "resname BCL and same resid as exwithin 12 of
- resid $pigm_resid"]
+		set pigm2 [atomselect top "resname BCL and same resid as exwithin 12 of resid $pigm_resid"]
 		set pigm_list2 [lsort -unique -integer [$pigm2 get resid]]
 		$pigm2 delete
 		#puts $pigm_list2
 		foreach pigm_resid2 $pigm_list2 {
 			if {$pigm_resid2 != $pigm_resid} {
 				set pigm2 [atomselect top "resid $pigm_resid2"]
-				set atom_list2 [lsort -unique -integer [$pigm2 get inde
-x]]
+				set atom_list2 [lsort -unique -integer [$pigm2 get index]]
 				$pigm2 delete
 				foreach atom_index2 $atom_list2 {
 					set atom2 [atomselect top "index $atom_index2"]
@@ -49,14 +47,11 @@ x]]
 					$atom2 delete
 					set cord2_vec [lindex $cord2 0]
 					#puts cord2$cord2_vec
-					set dist [veclength [vecsub $cord2_vec $cord1_v
-ec]]
+					set dist [veclength [vecsub $cord2_vec $cord1_vec]]
 					#puts $dist
 					if {$dist < $contact} {
-						puts $file "$dist resid$pigm_resid atom
-$atom_index resid$pigm_resid2 atom$atom_index2"
-						graphics top line [lindex $cord1 0] [li
-ndex $cord2 0] width 3 style dashed
+						puts $file "$dist resid$pigm_resid atom$atom_index resid$pigm_resid2 atom$atom_index2"
+						graphics top line [lindex $cord1 0] [lindex $cord2 0] width 3 style dashed
 					}
 					
 				}
