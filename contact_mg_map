@@ -1,0 +1,71 @@
+puts -nonewline "pdb name:\n>"
+flush stdout
+set pdb_name [gets stdin]
+flush stdout
+puts -nonewline "contact_distance:\n>"
+set contact_dis [gets stdin]
+set contact $contact_dis
+mol new $pdb_name
+set mg_choose [atomselect top "name MG"]
+set mg_list [lsort -unique -integer [$mg_choose get index]]
+#puts $mg_list
+$mg_choose delete
+set filename "dis_mg.dat"
+set file [open $filename w]
+foreach mg_index $mg_list {
+	set mg [atomselect top "index $mg_index"]
+	#puts $mg_index 
+	set mg_resn [$mg get resname]
+	#puts $mg_resn
+	set mg_residu [$mg get residue]
+	#puts $mg_residu
+	set cord1 [$mg get {x y z}]
+	if {0} {
+	#set px [lindex [lindex $cord1 0] 0]
+	set x1 [lindex $cord1 0 0]
+	set y1 [lindex $cord1 0 1]
+	set z1 [lindex $cord1 0 2]
+	#puts $x1 
+	}
+	set cord1_vec [lindex $cord1 0]
+	foreach mg_index2 $mg_list {
+		if {$mg_index != $mg_index2} {
+			set mg2 [atomselect top "index $mg_index2"]
+			set mg_residu2 [$mg2 get residue]
+#			puts $mg_residu2
+			set cord2 [$mg2 get {x y z}]
+			$mg2 delete
+			if {0} {
+			set x2 [lindex $cord2 0 0]
+			set y2 [lindex $cord2 0 1]
+			set z2 [lindex $cord2 0 2]
+			#puts $mg_index
+			#puts $mg_index2
+			}
+			set cord2_vec [lindex $cord2 0]
+			set dist [veclength [vecsub $cord2_vec $cord1_vec]]
+			#set dist [expr sqrt (($x1 - $x2)*($x1 - $x2)+($y1 - $y2)*($y1 
+- $y2)+($z1 - $z2)*($z1 - $z2))]
+			puts $dist
+			if {$dist < $contact} {
+				#puts $mg_residu
+				#puts $mg_residu2
+				puts $file "$dist $mg_residu $mg_residu2"
+				graphics top color 1
+				graphics top line [lindex $cord1 0] [lindex $cord2 0] w
+idth 3 style dashed
+			}
+		}
+		
+	}
+}
+unset mg_list 
+close $file
+#draw
+display resetview
+mol modselect 0 top resname BCL
+axes location Off
+color Display Background white
+display depthcue off
+scale by 1.4
+#render TachyonInternal /home/mrc/lh_study/2fkw/contact_map/cont_map.bmp display %s
