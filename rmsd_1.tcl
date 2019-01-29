@@ -1,4 +1,4 @@
-mol load parm7 3wu2.prmtop
+#mol load parm7 3wu2.prmtop
 mol new 3wu2.prmtop
 mol addfile prod.dcd step 4000
 
