@@ -1,6 +1,6 @@
 #mol load parm7 3wu2.prmtop
 #mol new 3wu2.prmtop
-#mol addfile prod.dcd step 4000
+#mol addfile prod.dcd step 4000 waitfor all #读入轨迹时一定要加waitfor all 否则轨迹每读完就执行后面的命令会出错
 
 set outfile [open rmsd.dat w]
 set nf [molinfo top get numframes]
